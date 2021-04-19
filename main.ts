@@ -9,11 +9,14 @@ new Curso("Principios de diseño y arquitectura", 25, 75, true, 2029)
 
 export const ap = new Aprendiz("Juan Pablo", "Reyes Gómez", "avatar.png", 30, NivelEducativo.POSGRADO, cursos);
 console.log(ap.cursos);
+
 let aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
 let estadisticasTables: HTMLElement = document.getElementById("estadisticas")!;
+let cursosTable: HTMLElement = document.getElementById("cursos")!;
 
 mostrarDatosAprendiz(ap);
 mostrarEstadisticas(ap);
+mostrarCursosAprendiz(ap);
 
 function mostrarDatosAprendiz(aprendiz: Aprendiz):void{
     // donde estará el cuerpo de la tabla aprendiz
@@ -40,4 +43,21 @@ function mostrarEstadisticas(aprendiz: Aprendiz):void{
     trelement.innerHTML = `<td><b>Cursos certificados</td><td>${numeroCertificados}</td>`;
     estadisticasTables.appendChild(trelement)
     
+}
+
+function mostrarCursosAprendiz(aprendiz: Aprendiz): void{
+    let cursosTbody: HTMLElement = document.createElement("tbody");
+    for(let curso of aprendiz.cursos)
+    {
+        let trelement: HTMLElement = document.createElement("tr");
+        trelement.innerHTML = `<td>${curso.nombre}</td>
+        <td>${curso.horas}</td>
+        <td>${curso.calificacion}</td>
+        <td>${curso.certificado}</td>
+        <td>${curso.anio}</td>
+        `;
+        cursosTbody.appendChild(trelement);
+    }
+    cursosTable.appendChild(cursosTbody);
+
 }

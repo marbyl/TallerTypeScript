@@ -9,8 +9,10 @@ export var ap = new Aprendiz("Juan Pablo", "Reyes Gómez", "avatar.png", 30, Niv
 console.log(ap.cursos);
 var aprendizTable = document.getElementById("aprendiz");
 var estadisticasTables = document.getElementById("estadisticas");
+var cursosTable = document.getElementById("cursos");
 mostrarDatosAprendiz(ap);
 mostrarEstadisticas(ap);
+mostrarCursosAprendiz(ap);
 function mostrarDatosAprendiz(aprendiz) {
     // donde estará el cuerpo de la tabla aprendiz
     var tbodyAprendiz = document.createElement("tbody");
@@ -30,4 +32,14 @@ function mostrarEstadisticas(aprendiz) {
     //Las comillas inertidas se usan para poder reemplazar dinámicamente los valores.
     trelement.innerHTML = "<td><b>Cursos certificados</td><td>" + numeroCertificados + "</td>";
     estadisticasTables.appendChild(trelement);
+}
+function mostrarCursosAprendiz(aprendiz) {
+    var cursosTbody = document.createElement("tbody");
+    for (var _i = 0, _a = aprendiz.cursos; _i < _a.length; _i++) {
+        var curso = _a[_i];
+        var trelement = document.createElement("tr");
+        trelement.innerHTML = "<td>" + curso.nombre + "</td>\n        <td>" + curso.horas + "</td>\n        <td>" + curso.calificacion + "</td>\n        <td>" + curso.certificado + "</td>\n        <td>" + curso.anio + "</td>\n        ";
+        cursosTbody.appendChild(trelement);
+    }
+    cursosTable.appendChild(cursosTbody);
 }
