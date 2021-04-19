@@ -13,11 +13,34 @@ console.log(ap.cursos);
 let aprendizTable: HTMLElement = document.getElementById("aprendiz")!;
 let estadisticasTables: HTMLElement = document.getElementById("estadisticas")!;
 let cursosTable: HTMLElement = document.getElementById("cursos")!;
+let btnFiltro: HTMLElement = document.getElementById("boton-filtro")!;
+let textoBusqueda: HTMLInputElement = <HTMLInputElement>document.getElementById("texto-busqueda")!;
+
+//Se cambia esto para incluir una función anónima
+// btnFiltro.onclick = filtrarPorNombre;
+btnFiltro.onclick = () => {
+    let text:string = textoBusqueda.value;
+    text = (text==null)?"":text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    //La siguiente línea también se cambia para meterle el operador flecha
+    // let cursosFiltrado: Curso[] = ap.cursos.filter(function(c){return c.nombre.match(text);});
+    let cursosFiltrado: Curso[] = ap.cursos.filter(c => c.nombre.match(text));
+    mostrarCursosAprendiz(cursosFiltrado);
+};
 
 mostrarDatosAprendiz(ap);
 mostrarEstadisticas(ap);
-mostrarCursosAprendiz(ap);
+mostrarCursosAprendiz(ap.cursos);
 
+//Se cambia esto para incluir una función anónima
+/* function filtrarPorNombre():void{
+    let text:string = textoBusqueda.value;
+    text = (text==null)?"":text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    let cursosFiltrado: Curso[] = ap.cursos.filter(function(c){return c.nombre.match(text);});
+    mostrarCursosAprendiz(cursosFiltrado);
+}
+ */
 function mostrarDatosAprendiz(aprendiz: Aprendiz):void{
     // donde estará el cuerpo de la tabla aprendiz
     let tbodyAprendiz = document.createElement("tbody");
@@ -45,9 +68,9 @@ function mostrarEstadisticas(aprendiz: Aprendiz):void{
     
 }
 
-function mostrarCursosAprendiz(aprendiz: Aprendiz): void{
+function mostrarCursosAprendiz(cursos: Curso[]): void{
     let cursosTbody: HTMLElement = document.createElement("tbody");
-    for(let curso of aprendiz.cursos)
+    for(let curso of cursos)
     {
         let trelement: HTMLElement = document.createElement("tr");
         trelement.innerHTML = `<td>${curso.nombre}</td>

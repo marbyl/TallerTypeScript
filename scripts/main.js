@@ -10,9 +10,31 @@ console.log(ap.cursos);
 var aprendizTable = document.getElementById("aprendiz");
 var estadisticasTables = document.getElementById("estadisticas");
 var cursosTable = document.getElementById("cursos");
+var btnFiltro = document.getElementById("boton-filtro");
+var textoBusqueda = document.getElementById("texto-busqueda");
+//Se cambia esto para incluir una función anónima
+// btnFiltro.onclick = filtrarPorNombre;
+btnFiltro.onclick = function () {
+    var text = textoBusqueda.value;
+    text = (text == null) ? "" : text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    //La siguiente línea también se cambia para meterle el operador flecha
+    // let cursosFiltrado: Curso[] = ap.cursos.filter(function(c){return c.nombre.match(text);});
+    var cursosFiltrado = ap.cursos.filter(function (c) { return c.nombre.match(text); });
+    mostrarCursosAprendiz(cursosFiltrado);
+};
 mostrarDatosAprendiz(ap);
 mostrarEstadisticas(ap);
-mostrarCursosAprendiz(ap);
+mostrarCursosAprendiz(ap.cursos);
+//Se cambia esto para incluir una función anónima
+/* function filtrarPorNombre():void{
+    let text:string = textoBusqueda.value;
+    text = (text==null)?"":text;
+    cursosTable.getElementsByTagName("tbody")[0].remove();
+    let cursosFiltrado: Curso[] = ap.cursos.filter(function(c){return c.nombre.match(text);});
+    mostrarCursosAprendiz(cursosFiltrado);
+}
+ */
 function mostrarDatosAprendiz(aprendiz) {
     // donde estará el cuerpo de la tabla aprendiz
     var tbodyAprendiz = document.createElement("tbody");
@@ -33,10 +55,10 @@ function mostrarEstadisticas(aprendiz) {
     trelement.innerHTML = "<td><b>Cursos certificados</td><td>" + numeroCertificados + "</td>";
     estadisticasTables.appendChild(trelement);
 }
-function mostrarCursosAprendiz(aprendiz) {
+function mostrarCursosAprendiz(cursos) {
     var cursosTbody = document.createElement("tbody");
-    for (var _i = 0, _a = aprendiz.cursos; _i < _a.length; _i++) {
-        var curso = _a[_i];
+    for (var _i = 0, cursos_1 = cursos; _i < cursos_1.length; _i++) {
+        var curso = cursos_1[_i];
         var trelement = document.createElement("tr");
         trelement.innerHTML = "<td>" + curso.nombre + "</td>\n        <td>" + curso.horas + "</td>\n        <td>" + curso.calificacion + "</td>\n        <td>" + curso.certificado + "</td>\n        <td>" + curso.anio + "</td>\n        ";
         cursosTbody.appendChild(trelement);
